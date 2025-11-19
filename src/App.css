@@ -1,0 +1,293 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 100%);
+  min-height: 100vh;
+}
+
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.cv-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  color: white;
+  padding: 3rem;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.avatar {
+  width: 130px;
+  height: 130px;
+  background: white;
+  color: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.header-info {
+  text-align: center;
+  flex: 1;
+}
+
+.header-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #bfdbfe;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.extra-info {
+  color: #bfdbfe;
+  margin-top: 0.5rem;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-button:hover {
+  background: #f3f4f6;
+}
+
+.nav-button.active {
+  background: white;
+  color: #2563eb;
+  font-weight: 600;
+  border-bottom-color: #2563eb;
+}
+
+/* Content */
+.content {
+  padding: 3rem;
+}
+
+.section h2 {
+  font-size: 1.875rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.section p {
+  color: #6b7280;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* Experience */
+.experience-block {
+  border-left: 4px solid #2563eb;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.experience-block:last-child {
+  border-color: #4f46e5;
+}
+
+.experience-block h3 {
+  font-size: 1.5rem;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.project-card {
+  background: #eff6ff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.project-card h4 {
+  color: #1e40af;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.experience-block ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-top: 0.75rem;
+}
+
+.experience-block li {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Education */
+.education-card {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  padding: 1.75rem;
+  border-radius: 10px;
+  border: 1px solid #bfdbfe;
+  margin-bottom: 1rem;
+}
+
+.education-card h3 {
+  color: #1f2937;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.education-card p {
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.education-card .email {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-category {
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+.skill-category h3 {
+  color: #1f2937;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+}
+
+.skill-tag.blue { background: #2563eb; }
+.skill-tag.indigo { background: #4f46e5; }
+.skill-tag.purple { background: #7c3aed; }
+.skill-tag.green { background: #059669; }
+.skill-tag.orange { background: #ea580c; }
+.skill-tag.pink { background: #db2777; }
+
+/* Responsive */
+@media (min-width: 768px) {
+  .header-content {
+    flex-direction: row;
+  }
+  
+  .header-info {
+    text-align: left;
+  }
+  
+  .contact-info {
+    justify-content: flex-start;
+  }
+  
+  .nav-button span {
+    display: inline;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .content {
+    padding: 1.5rem;
+  }
+  
+  .header {
+    padding: 2rem 1rem;
+  }
+  
+  .header-info h1 {
+    font-size: 1.75rem;
+  }
+  
+  .nav-button span {
+    display: none;
+  }
+}
