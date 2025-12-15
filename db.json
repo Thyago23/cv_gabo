@@ -1,0 +1,70 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Cómo construir una lista de tareas con React y JSON Server",
+      "date": "13-12-2025",
+      "slug": "lista-tareas-react-json-server",
+      "content": "### 📌 Cómo construir una lista de tareas con React y JSON Server\n\nEn este tutorial, exploraremos la arquitectura detrás de una aplicación completa (CRUD) de lista de tareas, centrándonos en cómo integrar React con un backend simulado utilizando JSON Server.\n\nEl objetivo es centralizar la lógica de datos con custom hooks y gestionar la navegación con React Router.\n\n### 🛠️ 1. Preparación del entorno\n\nEl primer paso es establecer las bases de nuestro proyecto:\n\n* Crea un proyecto de React (usando Vite o Create React App).\n* Instala las librerías necesarias: Axios para las peticiones HTTP y React Router para la navegación en la aplicación.\n Añade JSON Server como dependencia de desarrollo. Este se encargará de simular nuestra API RESTful.\n\n### 📂 2. Configuración de JSON Server\n\nJSON Server simplifica la fase de desarrollo al actuar como un *mock* de API:\n\n* Define un archivo `db.json` en la raíz que contendrá los datos iniciales de la aplicación.\n Crea una colección llamada `tasks` dentro de este archivo. Cada objeto debe tener, al menos, un `id`, un `title` y un estado `completed`.\n* Ejecuta JSON Server para que exponga un *endpoint* REST en un puerto local (ejemplo: `http://localhost:5000/tasks`).\n\n### ⚛️ 3. Estructura de la aplicación con React Router\n\nUtilizamos React Router para definir las tres vistas esenciales de la aplicación, permitiendo una navegación fluida:\n\n* Una vista principal para Listar todas las tareas.\n Una vista para Crear una nueva tarea.\n* Una vista para Editar una tarea existente.\n\n### 🔗 4. Lógica de conexión con Axios y custom hooks\n\nLa clave de la arquitectura es crear un custom hook (ej. `useTasks`) que centralice toda la interacción con el backend:\n\n* Obtener la lista de tareas (READ): Se encarga de la llamada inicial a la API.\n* Agregar una nueva tarea (CREATE): Envía datos mediante `POST`.\n* Actualizar una tarea (UPDATE): Envía datos mediante `PUT` o `PATCH`.\n* Eliminar una tarea (DELETE): Envía la solicitud de eliminación.\n\nEste hook devuelve tanto el estado (`tasks`) como las funciones CRUD, manteniendo los componentes de interfaz limpios y centrados en el renderizado.\n\n### 📝 5. Componentes principales\n\nLa interfaz de usuario se divide en componentes reutilizables:\n\n* Lista de tareas: Muestra las tareas cargadas desde el hook, con botones para la navegación (editar) o la eliminación.\n* Formulario de tarea: Un componente reutilizable que se usa tanto para crear como para editar tareas, manejando los inputs del título y el estado de completado.\n\n### 🚀 6. Flujo completo de la app\n\nEl flujo de la aplicación es completamente dinámico y gestionado por el hook y el enrutamiento:\n\n1.  La aplicación carga la lista de tareas desde JSON Server (READ).\n2.  El usuario puede crear una nueva tarea (CREATE), actualizando la API y el estado local.\n3.  El usuario puede editar (UPDATE) o eliminar (DELETE) una tarea. \n\nTodo esto se gestiona con Axios y la lógica de estado encapsulada en el custom hook asegurando organización y mantenibilidad.",
+      "author": "Santiago G. Cedeño"
+    },
+    {
+      "id": "2",
+      "title": "Dynamic Code Brand Checks",
+      "date": "13-12-2025",
+      "slug": "analisis-dynamicCodeBrandChecks",
+      "content": "### Análisis de la Propuesta: Dynamic Code Brand Checks\n\nEsta propuesta introduce Host Hooks (puntos de control del motor JS) para que el entorno de ejecución (navegadores, Node.js) pueda controlar cómo se ejecuta el código JavaScript generado dinámicamente (`eval`, `Function`).\n\n#### Problema que Resuelve:\n\n-- La falta de control del entorno host (navegador, Node.js) sobre la ejecución de código dinámico.\n-- Resuelve el desafío de implementar políticas de seguridad sólidas (como CSP) para bloquear la interpretación de cadenas como código ejecutable nativo.\n\n#### Cómo Funciona:\n\n-- Implementa dos Host Hooks que el entorno puede implementar para interceptar la compilación de código:\n\n1.   `HostEnsureCanCompileStrings`: Se llama antes de la compilación. Permite al host generar un error si la política de seguridad prohíbe el código dinámico.\n2.   `HostGetCodeForEval`: Permite que el host verifique el objeto pasado a `eval` para obtener la cadena de código a ejecutar.\n\n#### Relevancia para JS:\n\n-- Es muy importante para la seguridad y la estandarización .\n-- Proporciona un mecanismo estándar para que los hosts apliquen de manera uniforme políticas de seguridad de contenido (CSP), evitando vulnerabilidades comunes asociadas con la ejecución dinámica de código.\n\n#### Opinión Crítica:\n\n-- Bueno para mi es muy útil y necesaria ya que estandariza la separación de la semántica del lenguaje y las preocupaciones de seguridad del entorno del host.\n-- Y lo bueno que veo es que sus riesgos son bajos porque la implementación del estándar mantiene la compatibilidad, pero introduce controles de seguridad importantes y bien definidos.\n",
+      "author": "Santiago G. Cedeño"
+    }
+  ],
+  
+  "formacion": [
+    { "id": 1, "title": "Unidad Educativa Pedro Pablo Borja N°1", "detail": "Educación Secundaria", "email": null },
+    { "id": 2, "title": "Desarrollo de Software", "detail": "Tercer Semestre", "email": "sgcedenob@puce.edu.ec" }
+  ],
+  
+  "experiencia": [
+    {
+      "id": "1",
+      "category": "Proyectos Personales",
+      "title": "Juego de Simulación 'Monopolio' (Gamificación Laboral)",
+      "description": "Implementación de juego adaptado al entorno laboral basado en cumplimiento de metas de venta y operación.",
+      "bullets": [
+        "Aumentar la motivación y el espíritu lúdico durante las pausas activas",
+        "Reforzar el trabajo en equipo y la competencia",
+        "Vincular actividades recreativas con objetivos comerciales",
+        "Mejorar la cohesión y el clima laboral"
+      ]
+      
+    }, 
+
+    {
+      "id": "2",
+      "category": "Proyectos Institucionales",
+      "title": "Sistema Bancario Simulado",
+      "description": "Aplicación web que emula operaciones centrales de un cajero automático con frontend interactivo y base de datos relacional."
+    },
+    {
+      "id": "3",
+      "category": "Proyectos Institucionales",
+      "title": "Plataforma Educativa de Matemáticas (Adaptativa)",
+      "description": "Aplicación web dinámica dirigida a niños para fortalecer conocimiento matemático con dificultad progresiva adaptativa."
+    }
+  ], 
+  
+  "skills": [
+    { "id": 101, "category": "Lenguajes de Programación", "name": "Python", "color": "blue" },
+    { "id": 102, "category": "Lenguajes de Programación", "name": "JavaScript", "color": "blue" },
+    { "id": 201, "category": "Frontend Development", "name": "HTML", "color": "indigo" },
+    { "id": 202, "category": "Frontend Development", "name": "CSS", "color": "indigo" },
+    { "id": 301, "category": "Frameworks & Libraries", "name": "Django", "color": "purple" },
+    { "id": 302, "category": "Frameworks & Libraries", "name": "Node.js", "color": "purple" },
+    { "id": 401, "category": "Bases de Datos", "name": "SQL", "color": "green" },
+    { "id": 402, "category": "Bases de Datos", "name": "MySQL", "color": "green" },
+    { "id": 403, "category": "Bases de Datos", "name": "PostgreSQL", "color": "green" },
+    { "id": 501, "category": "Control de Versiones", "name": "Git", "color": "orange" },
+    { "id": 502, "category": "Control de Versiones", "name": "GitHub", "color": "orange" },
+    { "id": 601, "category": "Habilidades Blandas e Idiomas", "name": "Inglés Intermedio", "color": "pink" },
+    { "id": 602, "category": "Habilidades Blandas e Idiomas", "name": "Ofimática", "color": "pink" }
+  ]
+}

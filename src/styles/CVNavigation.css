@@ -1,0 +1,51 @@
+/* src/styles/CVNavigation.css */
+
+.navigation {
+  display: flex;
+  /* USA VARIABLES */
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--divider-color);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* USA VARIABLE */
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-button:hover {
+  /* USA VARIABLE */
+  background: var(--card-bg-light);
+}
+
+.nav-button.active {
+  /* USA VARIABLES */
+  background: var(--section-bg);
+  color: var(--accent-color);
+  font-weight: 600;
+  border-bottom-color: var(--accent-color);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .nav-button span {
+    display: none; /* Oculta texto para íconos en móvil */
+  }
+}
+@media (min-width: 768px) {
+  .nav-button span {
+    display: inline;
+  }
+}
