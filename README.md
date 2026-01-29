@@ -37,7 +37,7 @@ bashnpm install
 3. Instalar JSON Server globalmente (si no lo tienes)
 bashnpm install -g json-server
 
-▶Ejecución del Proyecto
+Ejecución del Proyecto
 El proyecto requiere dos terminales ejecutándose simultáneamente:
 
 Terminal 1: Iniciar Express Server (Backend)
