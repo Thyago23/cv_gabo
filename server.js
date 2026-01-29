@@ -5,57 +5,103 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Configurar variables de entorno
+// Seguridad, BD y auth
+import mongoose from 'mongoose';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
+// =================== CONFIG ===================
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Crear instancia de Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// =================== SEGURIDAD ===================
+
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+});
+app.use(limiter);
+
+// =================== MIDDLEWARE ===================
+
 app.use(express.json());
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true
 }));
 
-// Ruta para servir el db.json como API REST
+// =================== AUTH ===================
+
+const JWT_SECRET = process.env.JWT_SECRET || 'tu_clave_secreta_super_pro';
+
+const ADMIN_USER = {
+  username: "Thyago23",
+  passwordHash: "$2a$10$X729Z3mX9D.f.GUp7.B6u.D8XGjH5xG5G5G5G5G5G5G5G5G5G5G5G"
+};
+
+// ---------- LOGIN ----------
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (
+    username === ADMIN_USER.username &&
+    await bcrypt.compare(password, ADMIN_USER.passwordHash)
+  ) {
+    const token = jwt.sign({ user: username }, JWT_SECRET, { expiresIn: '2h' });
+    return res.json({ token });
+  }
+
+  res.status(401).json({ message: 'Credenciales incorrectas' });
+});
+
+// ---------- MIDDLEWARE JWT ----------
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+// =================== MONGODB ===================
+
+mongoose.connect(process.env.DB_URL)
+  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .catch(err => console.error('❌ Error MongoDB:', err));
+
+// =================== DB.JSON ===================
+
 const dbPath = path.join(__dirname, '../db.json');
 
-// Función para leer db.json
-const readDb = () => {
-  const data = fs.readFileSync(dbPath, 'utf-8');
-  return JSON.parse(data);
-};
-
-// Función para escribir en db.json
-const writeDb = (data) => {
+const readDb = () => JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+const writeDb = (data) =>
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), 'utf-8');
-};
 
 // =================== POSTS ===================
-// GET todos los posts
+
+// GET
 app.get('/posts', (req, res) => {
   const db = readDb();
   res.json(db.posts);
 });
 
-// GET un post por id
-app.get('/posts/:id', (req, res) => {
-  const db = readDb();
-  const post = db.posts.find(p => p.id === req.params.id);
-  if (post) {
-    res.json(post);
-  } else {
-    res.status(404).json({ message: 'Post no encontrado' });
-  }
-});
-
-// POST crear un nuevo post
-app.post('/posts', (req, res) => {
+// POST 🔒
+app.post('/posts', authenticateToken, (req, res) => {
   const db = readDb();
   const newPost = {
     id: String(Math.max(...db.posts.map(p => parseInt(p.id)), 0) + 1),
@@ -67,8 +113,8 @@ app.post('/posts', (req, res) => {
   res.status(201).json(newPost);
 });
 
-// PUT actualizar un post
-app.put('/posts/:id', (req, res) => {
+// PUT 🔒
+app.put('/posts/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.posts.findIndex(p => p.id === req.params.id);
   if (index !== -1) {
@@ -80,28 +126,29 @@ app.put('/posts/:id', (req, res) => {
   }
 });
 
-// DELETE eliminar un post
-app.delete('/posts/:id', (req, res) => {
+// DELETE 🔒
+app.delete('/posts/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.posts.findIndex(p => p.id === req.params.id);
   if (index !== -1) {
-    const deletedPost = db.posts.splice(index, 1);
+    const deleted = db.posts.splice(index, 1);
     writeDb(db);
-    res.json(deletedPost[0]);
+    res.json(deleted[0]);
   } else {
     res.status(404).json({ message: 'Post no encontrado' });
   }
 });
 
 // =================== FORMACIÓN ===================
-// GET toda la formación
+
+// GET
 app.get('/formacion', (req, res) => {
   const db = readDb();
   res.json(db.formacion);
 });
 
-// POST crear formación
-app.post('/formacion', (req, res) => {
+// POST 🔒
+app.post('/formacion', authenticateToken, (req, res) => {
   const db = readDb();
   const newItem = {
     id: Math.max(...db.formacion.map(f => f.id), 0) + 1,
@@ -112,8 +159,8 @@ app.post('/formacion', (req, res) => {
   res.status(201).json(newItem);
 });
 
-// PUT actualizar formación
-app.put('/formacion/:id', (req, res) => {
+// PUT 🔒
+app.put('/formacion/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.formacion.findIndex(f => f.id === parseInt(req.params.id));
   if (index !== -1) {
@@ -125,8 +172,8 @@ app.put('/formacion/:id', (req, res) => {
   }
 });
 
-// DELETE eliminar formación
-app.delete('/formacion/:id', (req, res) => {
+// DELETE 🔒
+app.delete('/formacion/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.formacion.findIndex(f => f.id === parseInt(req.params.id));
   if (index !== -1) {
@@ -139,14 +186,15 @@ app.delete('/formacion/:id', (req, res) => {
 });
 
 // =================== EXPERIENCIA ===================
-// GET toda la experiencia
+
+// GET
 app.get('/experiencia', (req, res) => {
   const db = readDb();
   res.json(db.experiencia);
 });
 
-// POST crear experiencia
-app.post('/experiencia', (req, res) => {
+// POST 🔒
+app.post('/experiencia', authenticateToken, (req, res) => {
   const db = readDb();
   const newItem = {
     id: String(Math.max(...db.experiencia.map(e => parseInt(e.id)), 0) + 1),
@@ -157,8 +205,8 @@ app.post('/experiencia', (req, res) => {
   res.status(201).json(newItem);
 });
 
-// PUT actualizar experiencia
-app.put('/experiencia/:id', (req, res) => {
+// PUT 🔒
+app.put('/experiencia/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.experiencia.findIndex(e => e.id === req.params.id);
   if (index !== -1) {
@@ -170,8 +218,8 @@ app.put('/experiencia/:id', (req, res) => {
   }
 });
 
-// DELETE eliminar experiencia
-app.delete('/experiencia/:id', (req, res) => {
+// DELETE 🔒
+app.delete('/experiencia/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = db.experiencia.findIndex(e => e.id === req.params.id);
   if (index !== -1) {
@@ -184,14 +232,15 @@ app.delete('/experiencia/:id', (req, res) => {
 });
 
 // =================== SKILLS ===================
-// GET todos los skills
+
+// GET
 app.get('/skills', (req, res) => {
   const db = readDb();
   res.json(db.skills || []);
 });
 
-// POST crear skill
-app.post('/skills', (req, res) => {
+// POST 🔒
+app.post('/skills', authenticateToken, (req, res) => {
   const db = readDb();
   if (!db.skills) db.skills = [];
   const newItem = {
@@ -203,8 +252,8 @@ app.post('/skills', (req, res) => {
   res.status(201).json(newItem);
 });
 
-// PUT actualizar skill
-app.put('/skills/:id', (req, res) => {
+// PUT 🔒
+app.put('/skills/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = (db.skills || []).findIndex(s => s.id === parseInt(req.params.id));
   if (index !== -1) {
@@ -216,8 +265,8 @@ app.put('/skills/:id', (req, res) => {
   }
 });
 
-// DELETE eliminar skill
-app.delete('/skills/:id', (req, res) => {
+// DELETE 🔒
+app.delete('/skills/:id', authenticateToken, (req, res) => {
   const db = readDb();
   const index = (db.skills || []).findIndex(s => s.id === parseInt(req.params.id));
   if (index !== -1) {
@@ -229,27 +278,17 @@ app.delete('/skills/:id', (req, res) => {
   }
 });
 
-// Ruta de prueba
+// =================== ROOT ===================
+
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'API de CV Backend funcionando ✅',
-    endpoints: {
-      posts: '/posts',
-      formacion: '/formacion',
-      experiencia: '/experiencia',
-      skills: '/skills'
-    }
+    protectedMethods: ['POST', 'PUT', 'DELETE']
   });
 });
 
-// Manejo de errores global
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Error interno del servidor' });
-});
+// =================== SERVER ===================
 
-// Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor ejecutándose en puerto ${PORT}`);
-  console.log(`📍 URL: http://localhost:${PORT}`);
+  console.log(`🚀 Servidor en http://localhost:${PORT}`);
 });
