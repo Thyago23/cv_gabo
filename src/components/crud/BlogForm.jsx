@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../api/client';
-import '../styles/FormStyles.css';
+import "../../styles/FormStyles.css";
 
 export default function BlogForm({ onPostCreated }) {
     const [formData, setFormData] = useState({
