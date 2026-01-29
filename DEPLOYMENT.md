@@ -18,7 +18,7 @@ Crea `.env` en la raíz del proyecto:
 VITE_API_URL_DEV=http://localhost:3000
 VITE_API_URL_PROD=https://tu-backend-en-render.onrender.com
 VITE_ENV=dev
-```
+```.
 
 ### 1.3 Probar localmente
 ```bash
