@@ -5,10 +5,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
-  ],
-  "env": {
-    "VITE_API_URL_PROD": "@api_url_prod"
-  }
+  ]
 }
