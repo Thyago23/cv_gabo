@@ -1,0 +1,76 @@
+/* src/styles/FormStyles.css */
+
+.divider {
+  margin: 30px 0;  
+  border: none;  
+  /* Usa variable de tema */
+  border-top: 1px solid var(--divider-color);
+}
+
+/* --- Estilos de Formularios de Añadir (Add Form) --- */
+.add-form {
+  padding: 1.5rem;
+  /* USA VARIABLES para fondo y borde */
+  background: var(--form-bg);
+  border: 1px dashed var(--form-border-accent);
+  border-radius: 10px;
+  margin-top: 2rem;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.add-form h3 {
+  font-size: 1.2rem;
+  /* USA VARIABLE para color del título del formulario */
+  color: var(--form-accent-text);
+  margin-bottom: 1rem;
+}
+
+.add-form input,
+.add-form textarea,
+.add-form select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  
+  /* CRUCIAL PARA MODO OSCURO */
+  color: var(--text-color); /* El texto que escribes debe ser CLARO en modo oscuro */
+  background-color: var(--section-bg); /* Fondo del input: blanco en claro, oscuro en oscuro */
+  
+  /* USA VARIABLES para borde */
+  border: 1px solid var(--form-input-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  display: block; 
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* Estilos de los botones del formulario */
+.form-button {
+  /* USA VARIABLES de acento */
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-color);
+  color: white; /* El texto del botón es siempre blanco */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background: var(--accent-color-dark);
+}
+
+/* Si tu botón de formulario es el elemento <button> directo en el .add-form */
+.add-form button {
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-form button:hover {
+  background: var(--accent-color-dark);
+}

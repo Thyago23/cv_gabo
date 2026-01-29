@@ -1,184 +1,101 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Code, Briefcase, GraduationCap, User } from 'lucide-react';
-import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; 
 
-export default function App() {
-  const [activeSection, setActiveSection] = useState('perfil');
+// --- Importaciones de estilos y lógica del CV ---
+import './styles/App.css'; 
+import './styles/Utils.css'; 
+import { useData } from './hooks/useData';
+import CVHeader from './components/CVHeader';
+import CVNavigation from './components/CVNavigation';
+import SectionContent from './components/SectionContent';
 
-  const sections = {
-    perfil: { title: 'Perfil', icon: <User size={20} /> },
-    experiencia: { title: 'Experiencia', icon: <Briefcase size={20} /> },
-    formacion: { title: 'Formación', icon: <GraduationCap size={20} /> },
-    habilidades: { title: 'Habilidades', icon: <Code size={20} /> }
-  };
+// --- Importaciones de las nuevas páginas del Blog ---
+import BlogHome from './pages/BlogHome'; 
+import PostDetail from './pages/PostDetail'; 
+import BlogManagement from './pages/BlogManagement'; 
 
-  return (
-    <div className="container">
-      <div className="cv-card">
-        {/* Header */}
-        <div className="header">
-          <div className="header-content">
-            <div className="avatar">CG</div>
-            <div className="header-info">
-              <h1>Cedeño Baquero Santiago Gabriel</h1>
-              <p className="subtitle">Estudiante de Desarrollo De Software</p>
-              <div className="contact-info">
-                <div className="contact-item">
-                  <Phone size={16} />
-                  <span>0992779736</span>
-                </div>
-                <div className="contact-item">
-                  <Mail size={16} />
-                  <span>noa00santy@gmail.com</span>
-                </div>
-                <div className="contact-item">
-                  <MapPin size={16} />
-                  <span>La Biloxi, Hernan Gmoinier</span>
-                </div>
-              </div>
-              <p className="extra-info">19 años | CI: 1752903995</p>
+// Nuevo componente utilitario para el CV
+import ThemeToggle from './components/ThemeToggle'; // Botón para cambiar tema
+
+
+// =========================================================================
+// 1. COMPONENTE DE PÁGINA: HOJA DE VIDA (CVPage)
+//    Contiene toda la lógica y renderizado del CV dinámico.
+// =========================================================================
+const CVPage = () => {
+    // Se define el estado para controlar qué sección del CV está activa.
+    const [activeSection, setActiveSection] = useState('perfil');
+    
+    // Se obtienen los datos y funciones CRUD desde el hook personalizado.
+    const {
+        experience, setExperience, handleDeleteExperience,
+        skills, setSkills, handleDeleteSkill,
+        education, setEducation, handleDeleteEducation
+    } = useData();
+
+    // Se agrupan todas las propiedades en un objeto para pasarlas a SectionContent.
+    const dataProps = {
+        experience, setExperience, handleDeleteExperience,
+        skills, setSkills, handleDeleteSkill,
+        education, setEducation, handleDeleteEducation
+    };
+
+    return (
+        <div className="cv-card">
+            
+            {/* Barra superior con enlace al blog y botón de cambio de tema */}
+            <div style={{ padding: '1rem', textAlign: 'right', background: '#f9fafb', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '15px' }}>
+                <Link to="/posts" className="nav-link-blog" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
+                    Ir al Blog Técnico
+                </Link>
+                <ThemeToggle />
             </div>
-          </div>
+
+            {/* Encabezado del CV */}
+            <CVHeader /> 
+            
+            {/* Navegación entre secciones */}
+            <CVNavigation 
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+            />
+
+            {/* Contenido dinámico según la sección activa */}
+            <div className="content">
+                <SectionContent 
+                    activeSection={activeSection}
+                    data={dataProps} 
+                />
+            </div>
         </div>
-
-        {/* Navigation */}
-        <div className="navigation">
-          {Object.keys(sections).map((key) => (
-            <button
-              key={key}
-              onClick={() => setActiveSection(key)}
-              className={`nav-button ${activeSection === key ? 'active' : ''}`}
-            >
-              {sections[key].icon}
-              <span>{sections[key].title}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div className="content">
-          {activeSection === 'perfil' && (
-            <div className="section">
-              <h2>Perfil Profesional</h2>
-              <p>
-                Estudiante de Desarrollo de Software con 19 años, apasionado por la tecnología y el desarrollo de soluciones innovadoras. 
-                Experiencia en creación de proyectos personales e institucionales, con enfoque en desarrollo web y aplicaciones educativas. 
-                Comprometido con el aprendizaje continuo y la mejora de habilidades técnicas.
-              </p>
-            </div>
-          )}
-
-          {activeSection === 'experiencia' && (
-            <div className="section">
-              <h2>Experiencia Laboral</h2>
-              
-              <div className="experience-block">
-                <h3>Creación De proyectos personales</h3>
-                <div className="project-card">
-                  <h4>Juego de Simulación "Monopolio"</h4>
-                  <p>
-                    Implementación de juego adaptado al entorno laboral basado en cumplimiento de metas de venta y operación.
-                  </p>
-                </div>
-                <ul>
-                  <li>Aumentar la motivación y el espíritu lúdico durante las pausas activas</li>
-                  <li>Reforzar el trabajo en equipo y la competencia</li>
-                  <li>Vincular actividades recreativas con objetivos comerciales</li>
-                  <li>Mejorar la cohesión y el clima laboral</li>
-                </ul>
-              </div>
-
-              <div className="experience-block">
-                <h3>Creación de proyectos institucionales</h3>
-                <div className="project-card">
-                  <h4>Sistema Bancario Simulado</h4>
-                  <p>
-                    Aplicación web que emula operaciones centrales de un cajero automático con frontend interactivo y base de datos relacional.
-                  </p>
-                </div>
-                <div className="project-card">
-                  <h4>Plataforma Educativa de Matemáticas (Adaptativa)</h4>
-                  <p>
-                    Aplicación web dinámica dirigida a niños para fortalecer conocimiento matemático con dificultad progresiva adaptativa.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeSection === 'formacion' && (
-            <div className="section">
-              <h2>Formación Académica</h2>
-              <div className="education-card">
-                <h3>Unidad Educativa Pedro Pablo Borja N°1</h3>
-                <p>Educación Secundaria</p>
-              </div>
-              <div className="education-card">
-                <h3>Desarrollo de Software</h3>
-                <p>Tercer Semestre</p>
-                <p className="email">sgcedenob@puce.edu.ec</p>
-              </div>
-            </div>
-          )}
-
-          {activeSection === 'habilidades' && (
-            <div className="section">
-              <h2>Habilidades Técnicas</h2>
-              <div className="skills-grid">
-                <div className="skill-category">
-                  <h3>Lenguajes de Programación</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag blue">Python</span>
-                    <span className="skill-tag blue">JavaScript</span>
-                  </div>
-                </div>
-                
-                <div className="skill-category">
-                  <h3>Frontend Development</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag indigo">HTML</span>
-                    <span className="skill-tag indigo">CSS</span>
-                  </div>
-                </div>
-
-                <div className="skill-category">
-                  <h3>Frameworks & Libraries</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag purple">Django</span>
-                    <span className="skill-tag purple">Node.js</span>
-                  </div>
-                </div>
-
-                <div className="skill-category">
-                  <h3>Bases de Datos</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag green">SQL</span>
-                    <span className="skill-tag green">MySQL</span>
-                    <span className="skill-tag green">PostgreSQL</span>
-                  </div>
-                </div>
-
-                <div className="skill-category">
-                  <h3>Control de Versiones</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag orange">Git</span>
-                    <span className="skill-tag orange">GitHub</span>
-                  </div>
-                </div>
-
-                <div className="skill-category">
-                  <h3>Otros</h3>
-                  <div className="skill-tags">
-                    <span className="skill-tag pink">Redes Sociales</span>
-                    <span className="skill-tag pink">Informática Intermedio</span>
-                    <span className="skill-tag pink">Inglés Intermedio</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
+
+
+// =========================================================================
+// 2. COMPONENTE DE RUTAS PRINCIPAL (MainRouter)
+//    Decide qué componente se renderiza según la URL.
+// =========================================================================
+const MainRouter = () => (
+    <BrowserRouter>
+        <Routes>
+            
+            {/* Ruta raíz (/) → muestra el CV */}
+            <Route path="/" element={<div className="container"><CVPage /></div>} />
+            
+            {/* Ruta /posts → listado de posts del blog */}
+            <Route path="/posts" element={<div className="container blog-container-wrapper"><BlogHome /></div>} />
+            
+            {/* Ruta /posts/manage → gestión de posts (crear, editar, eliminar) */}
+            <Route path="/posts/manage" element={<div className="container blog-container-wrapper"><BlogManagement /></div>} />
+            
+            {/* Ruta /posts/:id → detalle de un post específico */}
+            <Route path="/posts/:id" element={<div className="container blog-container-wrapper"><PostDetail /></div>} />
+
+            {/* Ruta comodín → página 404 */}
+            <Route path="*" element={<div className="container"><h1>404 | Página no encontrada</h1></div>} />
+        </Routes>
+    </BrowserRouter>
+);
+
+export default MainRouter;

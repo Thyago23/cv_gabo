@@ -1,0 +1,71 @@
+/* src/styles/Theme.css */
+
+/* Variables por defecto (Light Mode) */
+:root {
+  /* Fondo y Texto Base */
+  --bg-color: #ddd6fe;           /* Fondo general (morado muy claro del body) */
+  --text-color: #1f2937;         /* Texto principal oscuro */
+  --text-color-secondary: #6b7280; /* Texto secundario gris */
+  
+  /* Header */
+  --header-bg-start: #162e61;    /* Azul Oscuro */
+  --header-bg-end: #4f46e5;      /* Azul Vivo (Acento) */
+  --header-subtitle-color: #bfdbfe; /* Color para texto claro en el header */
+
+  /* CV Card y Componentes */
+  --section-bg: #ffffff;        /* Fondo de la CV Card (blanco) */
+  --card-bg: #f9fafb;           /* Fondo de navegación y skill category */
+  --card-bg-light: #eff6ff;     /* Fondo de proyecto (azul muy claro) */
+  --card-bg-gradient-start: #eff6ff; /* Gradiente de educación */
+  --card-bg-gradient-end: #e0e7ff;   /* Gradiente de educación */
+  
+  /* Bordes y Sombras */
+  --divider-color: #e5e7eb;     /* Líneas divisorias */
+  --divider-accent: #bfdbfe;    /* Divisor de acento (Educación) */
+  --shadow-opacity: 0.15;       
+
+  /* Formularios */
+  --form-bg: #f0f9ff;
+  --form-border-accent: #93c5fd;
+  --form-input-border: #d1d5db;
+  --form-accent-text: #1e40af;
+  
+  /* Colores de Acento Único */
+  --accent-color: #2563eb;       /* Azul para avatar, nav.active, buttons */
+  --accent-color-dark: #1e40af;  /* Azul oscuro para títulos de proyecto */
+}
+
+/* Dark Mode, aplicado cuando <html> tiene la clase .dark */
+html.dark {
+  /* Fondo y Texto Base */
+  --bg-color: #111827;           /* Fondo muy oscuro */
+  --text-color: #f3f4f6;         /* Texto principal CLARO */
+  --text-color-secondary: #9ca3af; /* Texto secundario CLARO */
+  
+  /* Header */
+  --header-bg-start: #0f172a;    
+  --header-bg-end: #374151;      
+  --header-subtitle-color: #e5e7eb;
+
+  /* CV Card y Componentes */
+  --section-bg: #1f2937;        /* Fondo de la CV Card */
+  --card-bg: #27303e;           /* Fondo de navegación y skill category */
+  --card-bg-light: #374151;      /* Fondo de proyecto */
+  --card-bg-gradient-start: #374151; /* Gradiente de educación */
+  --card-bg-gradient-end: #4b5563;   /* Gradiente de educación */
+  
+  /* Bordes y Sombras */
+  --divider-color: #4b5563;     /* Líneas divisorias oscuras */
+  --divider-accent: #4b5563;    
+  --shadow-opacity: 0.5;
+
+  /* Formularios */
+  --form-bg: #27303e;
+  --form-border-accent: #6b7280;
+  --form-input-border: #4b5563;
+  --form-accent-text: #60a5fa;
+
+  /* Colores de Acento Único */
+  --accent-color: #60a5fa;       /* Azul claro */
+  --accent-color-dark: #3b82f6;  
+}

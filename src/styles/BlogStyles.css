@@ -1,0 +1,636 @@
+/* src/styles/BlogStyles.css - CÓDIGO FINAL COMPLETO Y CORREGIDO */
+
+/* ----------------------------------------------------- */
+/* --- 1. CONTENEDOR PRINCIPAL Y ENCABEZADO --- */
+/* ----------------------------------------------------- */
+
+.blog-container {
+    /* El contenedor del blog usa el fondo de la CV Card para integrarse */
+    background-color: var(--section-bg); 
+    padding: 50px 40px; 
+    border-radius: 8px;
+    color: var(--text-color); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, var(--shadow-opacity));
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.blog-title {
+    font-size: 2.4em;
+    color: var(--text-color); 
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.blog-subtitle {
+    color: var(--text-color-secondary);
+    font-size: 1.1em;
+    margin-bottom: 40px;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: var(--text-color-secondary);
+}
+
+/* ----------------------------------------------------- */
+/* --- 2. LISTA DE POSTS (posts-list) --- */
+/* ----------------------------------------------------- */
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    /* ¡CLAVE! Separación vertical entre tarjetas */
+    gap: 35px; 
+}
+
+/* ----------------------------------------------------- */
+/* --- 3. TARJETA DE POST (post-card-blog) --- */
+/* ----------------------------------------------------- */
+
+.post-card-blog {
+    background-color: var(--card-bg-light); 
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent-color); 
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, var(--shadow-opacity));
+}
+
+.post-card-blog:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, calc(var(--shadow-opacity) * 1.5)); 
+}
+
+.post-card-blog h2 {
+    color: var(--text-color); 
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    color: var(--text-color-secondary); 
+    margin-bottom: 20px;
+    font-size: 0.95em;
+}
+
+.post-excerpt {
+    color: var(--text-color); 
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* ESTILO DE BOTÓN: Leer Post Completo */
+.read-more-link {
+    display: inline-block;
+    background-color: var(--accent-color); 
+    color: white; 
+    padding: 8px 15px; /* Tamaño de botón intermedio */
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.read-more-link:hover {
+    background-color: var(--accent-color-dark);
+    transform: translateY(-1px);
+}
+
+
+/* ----------------------------------------------------- */
+/* --- 4. ESTILOS DE LA VISTA DE DETALLE (PostDetail) --- */
+/* ----------------------------------------------------- */
+
+.post-detail-container {
+    background-color: var(--section-bg); 
+    padding: 50px 40px; 
+    border-radius: 8px;
+    color: var(--text-color); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, var(--shadow-opacity));
+}
+
+.post-title-detail {
+    font-size: 2.8em;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.post-divider {
+    border: none;
+    border-top: 1px solid var(--divider-color);
+    margin: 30px 0;
+}
+
+/* --- CONTENIDO DEL POST (post-content) --- */
+
+.post-content {
+    line-height: 1.8;
+    font-size: 1.05rem;
+    color: var(--text-color);
+}
+
+.post-content p {
+    margin-bottom: 1.5em;
+    color: var(--text-color);
+}
+
+.post-content .post-h3 {
+    color: var(--accent-color);
+    font-size: 1.8em;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content .post-h4 {
+    color: var(--accent-color-dark);
+    font-size: 1.4em;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+}
+
+.post-content .code-block {
+    background-color: #2d2d2d; 
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95em;
+    margin: 20px 0;
+    white-space: pre-wrap; 
+}
+
+.post-content ul, 
+.post-content ol {
+    margin: 1.5em 0 1.5em 2em;
+    list-style-type: disc;
+}
+
+.post-content li {
+    margin-bottom: 0.5em;
+    color: var(--text-color-secondary);
+}
+
+/* ESTILO DE BOTÓN: Volver a todos los posts (Arriba y Abajo) */
+.back-link {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px; /* Tamaño de botón intermedio */
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.back-link:hover {
+    background-color: var(--accent-color-dark);
+    transform: translateY(-1px);
+}
+
+.back-link-bottom {
+    margin-top: 40px;
+    margin-bottom: 0;
+    display: block;
+    text-align: center;
+}
+
+/* ----------------------------------------------------- */
+/* --- 5. BOTÓN DE VOLVER AL CV (DESTACADO) --- */
+/* ----------------------------------------------------- */
+
+.back-to-cv-link {
+    display: inline-block; 
+    
+    /* Variables de estilo principal */
+    background-color: var(--accent-color);
+    color: white; 
+    padding: 12px 25px;
+    border-radius: 8px; 
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    
+    /* Posicionamiento y sombra */
+    margin-top: 50px; 
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+
+    text-align: center;
+}
+
+.back-to-cv-link:hover {
+    background-color: var(--accent-color-dark);
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ----------------------------------------------------- */
+/* --- RESPONSIVE GENERAL DEL BLOG --- */
+/* ----------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .blog-container,
+    .post-detail-container {
+        padding: 30px 15px;
+    }
+    
+    .blog-title,
+    .post-title-detail {
+        font-size: 2em;
+    }
+
+    .post-card-blog {
+        padding: 20px;
+    }
+    
+    .post-card-blog h2 {
+        font-size: 1.5em;
+    }
+
+    .read-more-link,
+    .back-link,
+    .back-to-cv-link {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
+
+/* ----------------------------------------------------- */
+/* --- GESTIÓN DE BLOGS Y FORMULARIOS --- */
+/* ----------------------------------------------------- */
+
+.blog-management-container {
+    background-color: var(--section-bg);
+    padding: 50px 40px;
+    border-radius: 8px;
+    color: var(--text-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, var(--shadow-opacity));
+}
+
+.blog-management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.blog-management-header h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.toggle-form-button {
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.toggle-form-button:hover {
+    background: var(--accent-color-dark);
+}
+
+/* Formulario de Blog */
+.blog-form-container {
+    background: var(--form-bg);
+    padding: 30px;
+    border: 1px dashed var(--form-border-accent);
+    border-radius: 10px;
+    margin-bottom: 40px;
+    transition: background 0.3s;
+}
+
+.blog-form-container h2 {
+    color: var(--form-accent-text);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px 12px;
+    background-color: var(--section-bg);
+    color: var(--text-color);
+    border: 1px solid var(--form-input-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 200px;
+    line-height: 1.5;
+}
+
+.slug-preview {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    margin-top: 5px;
+}
+
+.slug-preview code {
+    background: var(--accent-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.char-count {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    text-align: right;
+}
+
+.submit-button {
+    padding: 12px 24px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-button:hover:not(:disabled) {
+    background: var(--accent-color-dark);
+}
+
+.submit-button:disabled {
+    background: var(--text-color-secondary);
+    cursor: not-allowed;
+}
+
+.blog-submit {
+    align-self: flex-end;
+}
+
+.error-message {
+    background: #fee;
+    color: #c33;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #c33;
+}
+
+.success-message {
+    background: #efe;
+    color: #3c3;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #3c3;
+}
+
+.markdown-help {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--form-bg);
+    border: 1px solid var(--form-input-border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.markdown-help summary {
+    font-weight: bold;
+    color: var(--accent-color);
+    user-select: none;
+}
+
+.markdown-help .help-content {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--form-input-border);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.markdown-help p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+.markdown-help code {
+    background: var(--section-bg);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+}
+
+/* Lista de blogs en gestión */
+.blog-management-list {
+    margin-top: 40px;
+}
+
+.blog-management-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.no-content {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-color-secondary);
+    font-size: 1.1rem;
+}
+
+.posts-management {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-management-card {
+    background: var(--form-bg);
+    padding: 20px;
+    border: 1px solid var(--form-input-border);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.post-management-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.post-header h3 {
+    margin: 0;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.post-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-save,
+.btn-cancel {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.btn-edit {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #45a049;
+}
+
+.btn-delete {
+    background: #f44336;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #da190b;
+}
+
+.btn-save {
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-save:hover {
+    background: var(--accent-color-dark);
+}
+
+.btn-cancel {
+    background: var(--text-color-secondary);
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: var(--text-color);
+}
+
+.post-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+.post-preview {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 15px 0;
+    font-size: 0.95rem;
+}
+
+.edit-form {
+    margin: 15px 0;
+}
+
+.edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--section-bg);
+    color: var(--text-color);
+    border: 1px solid var(--form-input-border);
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.post-slug {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .blog-management-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .post-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-actions {
+        width: 100%;
+    }
+
+    .post-actions button {
+        flex: 1;
+    }
+
+    .markdown-help .help-content {
+        grid-template-columns: 1fr;
+    }
+}
